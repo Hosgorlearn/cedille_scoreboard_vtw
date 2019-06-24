@@ -72,7 +72,7 @@ local function Actionsonplayer_Fadmin(vi, MainPanel_Backgroundserver, PanelInfo)
         Actionsonplayer_Fadmin.icon.LayoutEntity = function() return end
     end 
 
-    Actionsonplayer_Fadmin_ProfilButn = vgui.Create("DButton", Actionsonplayer_Fadmin)                    
+   	local Actionsonplayer_Fadmin_ProfilButn = vgui.Create("DButton", Actionsonplayer_Fadmin)                    
     Actionsonplayer_Fadmin_ProfilButn:SetSize(50, 30)
     Actionsonplayer_Fadmin_ProfilButn:SetPos(3, 142)                     
     Actionsonplayer_Fadmin_ProfilButn:SetText(scorebaord_cedille_language["Name_SteamBtn"])
@@ -133,6 +133,7 @@ local function Actionsonplayer_Fadmin(vi, MainPanel_Backgroundserver, PanelInfo)
         if v.Visible == true or (type(v.Visible) == "function" and v.Visible(FAdmin.ScoreBoard.Player.Player) == true) then
 
             local Actionbutton_Onplayer = vgui.Create("FAdminActionButton", Actionsonplayer_Fadmin.Listo_Fadmin)
+
             if type(v.Image) == "string" then
                 Actionbutton_Onplayer:SetImage(v.Image or "icon16/exclamation")
             elseif type(v.Image) == "table" then
@@ -181,7 +182,7 @@ local function OpenFadminMenu_cedille()
         Derma_DrawBackgroundBlur(self)
     end
 
-    MainFrame_ClosButton = vgui.Create("DButton", MainFrame)
+    local MainFrame_ClosButton = vgui.Create("DButton", MainFrame)
     MainFrame_ClosButton:SetSize(50, 15)
     MainFrame_ClosButton:SetPos(550, 5)
     MainFrame_ClosButton:SetText("X")
@@ -196,14 +197,14 @@ local function OpenFadminMenu_cedille()
         draw.RoundedBox(5, 0, 0, w, h, Color(255, 0, 0, 255))
     end 
 
-    MainFrame_TitleFrame = vgui.Create("DLabel", MainFrame)
+    local MainFrame_TitleFrame = vgui.Create("DLabel", MainFrame)
     MainFrame_TitleFrame:SetPos(180, -5)
     MainFrame_TitleFrame:SetText(scorebaord_cedille_language["sentence_OfFadminServ"])
     MainFrame_TitleFrame:SetFont("scoreboard_cedille2_Scorefont2")
     MainFrame_TitleFrame:SizeToContents()
     MainFrame_TitleFrame:SetTextColor(Color(255, 255, 255, 255))
 
-    MainFrame_DScrollPanel_P = vgui.Create("DScrollPanel", MainFrame)
+    local MainFrame_DScrollPanel_P = vgui.Create("DScrollPanel", MainFrame)
     MainFrame_DScrollPanel_P:SetSize(MainFrame:GetWide(), MainFrame:GetTall() - 25)
     MainFrame_DScrollPanel_P:SetPos(0, 25)
 
@@ -302,8 +303,9 @@ local function OpenFadminMenu_cedille()
     end 
 end
 
+local MainPanel = nil
 
-local function scoreboardshow()
+local function scV_scoreboardshow()
     
     local Cedi_ply            = LocalPlayer()
     local Cedi_Playeronline   = player.GetCount()
@@ -465,8 +467,7 @@ local function scoreboardshow()
                 local Server1_Background = vgui.Create("DPanel",PanelInfo[k3])
                 Server1_Background:SetSize(120, 150)
                 Server1_Background:SetPos(v4.posx, v4.posy)
-                Server1_Background.Paint = function(self, w, h) 
-                end 
+                Server1_Background.Paint = nil
 
                 local Server1_Info = vgui.Create("DLabel", Server1_Background)
                 Server1_Info:SetText(v4.info)
@@ -668,20 +669,20 @@ local function scoreboardshow()
 end
 
 
-local function scoreboardhide()
+local function scV_scoreboardhide()
     if IsValid(MainPanel) then 
         MainPanel:Hide()
     end
 end
 
 
-hook.Add("ScoreboardShow","Showscore2_cedille", function()
-	scoreboardshow()
+hook.Add("ScoreboardShow","scoreboard_cedille_vtw:Showscore", function()
+	scV_scoreboardshow()
 	return true
 end)
 
 
-hook.Add("ScoreboardHide", "Hidescore2_cedille", function()
-    scoreboardhide()
+hook.Add("ScoreboardHide", "scoreboard_cedille_vtw:Hidescore", function()
+    scV_scoreboardhide()
     return true
 end)
